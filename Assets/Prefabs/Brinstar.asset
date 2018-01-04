@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db417b84cd364c17b5825e7f6cb28ed, type: 3}
+  m_Name: Brinstar
+  m_EditorClassIdentifier: 
+  floor: {fileID: 1730675669690832, guid: 0ac74088443444ff59ed3beff6d5b594, type: 2}
+  walls:
+  - {fileID: 1963275512871382, guid: 6bafb23aa4d764bf1bf9c7907d243c18, type: 2}
+  - {fileID: 1024721953670084, guid: afa727bb475104ccd833eedec6895554, type: 2}
+  door: {fileID: 1835049625209234, guid: afe9f9c615a834e79914be14113513a1, type: 2}
