@@ -87,8 +87,8 @@ public class MapGenerator : MonoBehaviour {
 			}
 
 			else {
-				roomX = origin.x - Random.Range(0, width - 1);
-				roomY = origin.y - Random.Range(0, height - 1);
+				roomX = origin.x - Random.Range(0, width);
+				roomY = origin.y - Random.Range(0, height);
 			}
 
 			roomRect = new IntRect(roomX, roomX + width - 1, roomY, roomY + height - 1);
