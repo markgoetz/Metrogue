@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class Player : MonoBehaviour {
-	private BoxCollider playerCollider;
-	void Start () {
-		this.playerCollider = GetComponent<BoxCollider>();
+public class Player : ActorBehavior {
+	protected bool _readyForInput;
+
+	void Awake () {
+		this._readyForInput = false;
 	}
 
 	public void SpawnAt(IntPoint origin) {
 		this.transform.position = new Vector3(origin.x, 1, origin.y);
 	}
+
+	protected override void _ExecuteAction() {
+		this._readyForInput = true;
+	}
 	
-	void Update () {
+	void LateUpdate () {
+		if (this._readyForInput) {
+			_checkForInput();
+		}
+	}
+
+	protected void _checkForInput() {
 		Vector3 movementAmount = new Vector3();
 
 		if (Input.GetButtonDown("Left")) {
@@ -28,6 +39,8 @@ public class Player : MonoBehaviour {
 
 		if (movementAmount != Vector3.zero && _CanMove(movementAmount)) {
 			transform.Translate(movementAmount);
+			this._readyForInput = false;
+			this._Finish();
 		}
 	}
 
@@ -35,5 +48,11 @@ public class Player : MonoBehaviour {
 		int layerMask = 1 << LayerMask.NameToLayer("Block");
 		Vector3 origin = transform.position;
 		return !Physics.Raycast(origin, movementAmount, movementAmount.magnitude, layerMask);
+	}
+
+	public bool IsAlive {
+		get {
+			return true;
+		}
 	}
 }
