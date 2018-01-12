@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Player : ActorBehavior {
+	public GameObject blasterShot;
 	protected bool _readyForInput;
 
 	void Awake () {
@@ -14,8 +15,9 @@ public class Player : ActorBehavior {
 		this.transform.position = new Vector3(origin.x, 1, origin.y);
 	}
 
-	protected override void _ExecuteAction() {
+	protected override IEnumerator _ExecuteAction() {
 		this._readyForInput = true;
+		yield break;
 	}
 	
 	void LateUpdate () {
@@ -35,10 +37,15 @@ public class Player : ActorBehavior {
 			movementAmount = new Vector3(0, 0, 1);
 		} else if (Input.GetButtonDown("Down")) {
 			movementAmount = new Vector3(0, 0, -1);
+		} else if (Input.GetButtonDown("Fire1")) {
+			Instantiate(blasterShot, transform.position, transform.rotation);
+			this._Finish();
 		}
 
 		if (movementAmount != Vector3.zero && _CanMove(movementAmount)) {
-			transform.Translate(movementAmount);
+			transform.LookAt(transform.position + movementAmount);
+			transform.position = transform.position + movementAmount;
+
 			this._readyForInput = false;
 			this._Finish();
 		}

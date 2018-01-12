@@ -7,15 +7,13 @@ public class Actor : MonoBehaviour {
     public float speed;
 
     protected ActorBehavior behavior;
-    protected float _energy;
+    public float _energy;
 
     void Start() {
         _Init();
     }
     
     void _Init() {
-        GameLoop loop = GameLoop.GetInstance();
-        loop.RegisterActor(this);
         _energy = 0;
     }
 

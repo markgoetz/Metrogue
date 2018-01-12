@@ -6,7 +6,6 @@ public class GameLoop : MonoBehaviour {
 	public Player player;
 	public MapGenerator mapGenerator;
 
-	private List<Actor> actors;
 	private IntPoint origin;
 
 	// Use this for initialization
@@ -15,8 +14,6 @@ public class GameLoop : MonoBehaviour {
 			Random.Range(1, mapGenerator.mapSize.x - 1),
 			Random.Range(1, mapGenerator.mapSize.y - 1)
 		);
-
-		actors = new List<Actor>();
 	}
 
 	void Start() {
@@ -27,22 +24,21 @@ public class GameLoop : MonoBehaviour {
 	}
 
 	IEnumerator RunGameLoop() {
+		Actor[] actors;
 		while (player.IsAlive) {
+			actors = FindObjectsOfType(typeof(Actor)) as Actor[];
 			foreach (Actor actor in actors) {
 				actor.TakeTurn();
 				while (!actor.IsDone) {
 					yield return null;
 				}
+				yield return new WaitForSeconds(.2f);
 			}
 
 			yield return null;
 		}
 
 		yield break;
-	}
-
-	public void RegisterActor(Actor actor) {
-		this.actors.Add(actor);
 	}
 
 	public static GameLoop GetInstance() {

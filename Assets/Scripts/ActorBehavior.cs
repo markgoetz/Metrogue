@@ -13,10 +13,10 @@ abstract public class ActorBehavior : MonoBehaviour {
 
     public void TakeAction() {
         state = BehaviorState.WAITING;
-        _ExecuteAction();
+        StartCoroutine("_ExecuteAction");
     }
     
-    abstract protected void _ExecuteAction();
+    abstract protected IEnumerator _ExecuteAction();
 
     protected void _Finish() {
         state = BehaviorState.DONE;

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23218690485952368}
   - component: {fileID: 33065985465077414}
   - component: {fileID: 65289537992074082}
+  - component: {fileID: 114262559048517406}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -112,6 +113,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114262559048517406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215963591939690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec7b94f7f3784bde999744687dfbd9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114626078141195142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,3 +136,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d3976f23ff14bf293285791fe1a072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blasterShot: {fileID: 1100882640345406, guid: 9b6f5176f65fd46b3927b4097f9e8602,
+    type: 2}
