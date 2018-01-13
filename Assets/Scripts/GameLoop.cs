@@ -8,7 +8,6 @@ public class GameLoop : MonoBehaviour {
 
 	private IntPoint origin;
 
-	// Use this for initialization
 	void Awake () {
 		origin = new IntPoint(
 			Random.Range(1, mapGenerator.mapSize.x - 1),
@@ -28,11 +27,17 @@ public class GameLoop : MonoBehaviour {
 		while (player.IsAlive) {
 			actors = FindObjectsOfType(typeof(Actor)) as Actor[];
 			foreach (Actor actor in actors) {
-				actor.TakeTurn();
-				while (!actor.IsDone) {
-					yield return null;
+				actor.GainEnergy();
+				while (actor.HasAction) {
+					yield return actor.TakeAction();
+					yield return new WaitForSeconds(.1f);
 				}
-				yield return new WaitForSeconds(.2f);
+			}
+
+			for (int i = 0; i < actors.Length; i++) {
+				if (actors[i].ShouldBeDestroyed) {
+					Destroy(actors[i].gameObject);
+				}
 			}
 
 			yield return null;

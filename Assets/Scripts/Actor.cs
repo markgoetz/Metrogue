@@ -7,7 +7,8 @@ public class Actor : MonoBehaviour {
     public float speed;
 
     protected ActorBehavior behavior;
-    public float _energy;
+    protected float _energy;
+    protected bool _shouldBeDestroyed;
 
     void Start() {
         _Init();
@@ -17,20 +18,26 @@ public class Actor : MonoBehaviour {
         _energy = 0;
     }
 
-    public void TakeTurn() {
+    public void GainEnergy() {
         _energy += speed;
-        StartCoroutine("TakeActions");
     }
 
-    public IEnumerator TakeActions() {
+    public IEnumerator TakeAction() {
+        if (_shouldBeDestroyed)
+            yield return null;
+
         this.behavior = GetComponent<ActorBehavior>();
-        while (HasAction) {
-            _energy -= 1;
-            behavior.TakeAction();
-            while (!behavior.IsDone) {
-                yield return null;
-            }
+        _energy -= 1;
+        behavior.TakeAction();
+        while (!behavior.IsDone) {
+            yield return null;
         }
+    }
+
+    public void SetToDestroy() {
+        _shouldBeDestroyed = true;
+        _energy = 0;
+        gameObject.SetActive(false);
     }
 
     public bool HasAction {
@@ -42,6 +49,12 @@ public class Actor : MonoBehaviour {
     public bool IsDone {
         get {
             return (!HasAction && behavior.IsDone);
+        }
+    }
+
+    public bool ShouldBeDestroyed {
+        get {
+            return _shouldBeDestroyed;
         }
     }
 }
