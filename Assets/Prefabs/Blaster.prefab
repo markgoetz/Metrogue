@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5651d6fba1e48401c80c7382753741c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
 --- !u!114 &114935498701107102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,7 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  _energy: 0
 --- !u!198 &198990773307034526
 ParticleSystem:
   m_ObjectHideFlags: 1
