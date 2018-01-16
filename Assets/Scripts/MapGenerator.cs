@@ -208,8 +208,6 @@ public class MapGenerator : MonoBehaviour {
 			if (!tile.GetComponent<VisibilityItem>())
 				continue;
 
-			Debug.Log("Testing tile " + tile.transform.position);
-
 			for (int i = 0; i < rooms.Count; i++) {
 				Room room = rooms[i];
 
@@ -217,7 +215,6 @@ public class MapGenerator : MonoBehaviour {
 					tile.transform.position.x <= room.rectangle.xMax + 1 &&
 					tile.transform.position.z >= room.rectangle.yMin - 1 &&
 					tile.transform.position.z <= room.rectangle.yMax + 1) {
-						Debug.Log("Adding " + tile.transform.position + " to " + i);
 						visibilityManager.AddItemToRoom(tile.GetComponent<VisibilityItem>(), i);
 				}
 			}
