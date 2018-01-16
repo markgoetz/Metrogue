@@ -21,7 +21,6 @@ public class VisibilityManager : MonoBehaviour {
 	}
 
 	public void ShowItemsInRoom(int roomIndex) {
-		Debug.Log(items[roomIndex].Count);
 		items[roomIndex].ForEach(item => item.Show());
 	}
 
