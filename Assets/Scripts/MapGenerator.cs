@@ -15,20 +15,20 @@ public class MapGenerator : MonoBehaviour {
 	private IntPoint origin;
 	private AdjacencyGraph adjacency;
 	private TileRenderer tileRenderer;
+	private VisibilityManager visibilityManager;
 
-	// Use this for initialization
 	void Start () {
 		Init();
 	}
-
 
 	public void GenerateMap(IntPoint origin) {
 		this.origin = origin;
 		GenerateRooms();
 		CalculateAdjacency();
-		//CalculateRoomDifficulty();
+		CalculateRoomDifficulty();
 		PlaceDoors();
 		RenderTiles();
+		SetVisibility();
 	}
 
 	void Init() {
@@ -40,6 +40,7 @@ public class MapGenerator : MonoBehaviour {
 		}
 
 		tileRenderer = new TileRenderer(rooms);
+		visibilityManager = VisibilityManager.GetInstance();
 	}
 
 	void GenerateRooms() {
@@ -197,6 +198,32 @@ public class MapGenerator : MonoBehaviour {
 
 	void RenderTiles() {
 		tileRenderer.Render(tiles, tileset);
+	}
+
+	void SetVisibility() {
+		visibilityManager.SetRoomCount(rooms.Count);
+		List<GameObject> tileList = tileRenderer.TileList;
+
+		foreach (GameObject tile in tileList) {
+			if (!tile.GetComponent<VisibilityItem>())
+				continue;
+
+			Debug.Log("Testing tile " + tile.transform.position);
+
+			for (int i = 0; i < rooms.Count; i++) {
+				Room room = rooms[i];
+
+				if (tile.transform.position.x >= room.rectangle.xMin - 1 &&
+					tile.transform.position.x <= room.rectangle.xMax + 1 &&
+					tile.transform.position.z >= room.rectangle.yMin - 1 &&
+					tile.transform.position.z <= room.rectangle.yMax + 1) {
+						Debug.Log("Adding " + tile.transform.position + " to " + i);
+						visibilityManager.AddItemToRoom(tile.GetComponent<VisibilityItem>(), i);
+				}
+			}
+		}
+
+		visibilityManager.ShowItemsInRoom(0);
 	}
 
 	float GetFullness() {

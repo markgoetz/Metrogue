@@ -1,11 +1,14 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class TileRenderer {
 	private List<Room> rooms;
+	private List<GameObject> tileList;
 
 	public TileRenderer(List<Room> rooms) {
 		this.rooms = rooms;
+		tileList = new List<GameObject>();
 	}
 
 	public void Render(TileType[][] tiles, Tileset tileset) {
@@ -44,7 +47,17 @@ public class TileRenderer {
 				if (tile != null && room != null) {
 					tile.transform.parent = room.transform;
 				}
+
+				if (tile != null) {
+					tileList.Add(tile);
+				}
 			}
+		}
+	}
+
+	public List<GameObject> TileList {
+		get {
+			return tileList;
 		}
 	}
 }
