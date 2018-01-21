@@ -40,7 +40,22 @@ public class TileRenderer {
 						tile = GameObject.Instantiate(tileset.walls[0], new Vector3(x, 1, y), Quaternion.identity);
 						break;
 					case TileType.DOOR:
+						int room1 = -1, room2 = -1;
+
+						for (int r = 0; r < rooms.Count; r++) {
+							IntRect rectangle = rooms[r].rectangle;
+							if (x >= rectangle.xMin - 1 && x <= rectangle.xMax + 1 && y >= rectangle.yMin - 1 && y <= rectangle.yMax + 1) {
+								if (room1 == -1) {
+									room1 = r;
+								} else {
+									room2 = r;
+									break;
+								}
+							}
+						}
+
 						tile = GameObject.Instantiate(tileset.door, new Vector3(x, 1, y), Quaternion.identity);
+						tile.GetComponent<Door>().SetAdjacentRooms(room1, room2);
 						break;
 				}
 
