@@ -5,9 +5,11 @@ using UnityEngine;
 public class VisibilityManager : MonoBehaviour {
 
 	private List<VisibilityItem>[] items;
+	private bool[] isVisible;
 
 	public void SetRoomCount(int roomCount) {
 		items = new List<VisibilityItem>[roomCount];
+		isVisible = new bool[roomCount];
 		for (int i = 0; i < roomCount; i++) {
 			items[i] = new List<VisibilityItem>();
 		}
@@ -21,7 +23,11 @@ public class VisibilityManager : MonoBehaviour {
 	}
 
 	public void ShowItemsInRoom(int roomIndex) {
+		if (isVisible[roomIndex])
+			return;
+
 		items[roomIndex].ForEach(item => item.Show());
+		isVisible[roomIndex] = true;
 	}
 
 	public static VisibilityManager GetInstance() {
